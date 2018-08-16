@@ -1,0 +1,295 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ForumDbModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="ForumDbModelStoreContainer">
+    <EntitySet Name="C__MigrationHistory" EntityType="ForumDbModel.Store.C__MigrationHistory" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Users" EntityType="ForumDbModel.Store.Users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DiscussionsSet" EntityType="ForumDbModel.Store.DiscussionsSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CommentsSet" EntityType="ForumDbModel.Store.CommentsSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CategoriesSet" EntityType="ForumDbModel.Store.CategoriesSet" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="CommentsDiscussions" Association="ForumDbModel.Store.CommentsDiscussions">
+      <End Role="Comments" EntitySet="CommentsSet" />
+      <End Role="Discussions" EntitySet="DiscussionsSet" />
+    </AssociationSet>
+    <AssociationSet Name="CommentsUsers" Association="ForumDbModel.Store.CommentsUsers">
+      <End Role="Comments" EntitySet="CommentsSet" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="CategoriesDiscussions" Association="ForumDbModel.Store.CategoriesDiscussions">
+      <End Role="Categories" EntitySet="CategoriesSet" />
+      <End Role="Discussions" EntitySet="DiscussionsSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="C__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="nvarchar" Nullable="false" MaxLength="150" />
+    <Property Name="ContextKey" Type="nvarchar" Nullable="false" MaxLength="300" />
+    <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+    <Property Name="ProductVersion" Type="nvarchar" Nullable="false" MaxLength="32" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Age" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DiscussionsSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="DateTime" Type="datetime" Nullable="false" />
+    <Property Name="State" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Categories_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CommentsSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CreateDateTime" Type="datetime" Nullable="false" />
+    <Property Name="Discussions_Id" Type="int" Nullable="false" />
+    <Property Name="Users_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CategoriesSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="CommentsDiscussions">
+    <End Role="Comments" Type="ForumDbModel.Store.CommentsSet" Multiplicity="*" />
+    <End Role="Discussions" Type="ForumDbModel.Store.DiscussionsSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Discussions">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Comments">
+        <PropertyRef Name="Discussions_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CommentsUsers">
+    <End Role="Comments" Type="ForumDbModel.Store.CommentsSet" Multiplicity="*" />
+    <End Role="Users" Type="ForumDbModel.Store.Users" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Comments">
+        <PropertyRef Name="Users_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CategoriesDiscussions">
+    <End Role="Categories" Type="ForumDbModel.Store.CategoriesSet" Multiplicity="1" />
+    <End Role="Discussions" Type="ForumDbModel.Store.DiscussionsSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categories">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Discussions">
+        <PropertyRef Name="Categories_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ForumDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Age" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Comments" Relationship="ForumDbModel.CommentsUsers" FromRole="Users" ToRole="Comments" />
+        </EntityType>
+        <EntityContainer Name="ForumDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <EntitySet Name="DiscussionsSet" EntityType="ForumDbModel.Discussions" />
+          <EntitySet Name="CommentsSet" EntityType="ForumDbModel.Comments" />
+          <AssociationSet Name="CommentsDiscussions" Association="ForumDbModel.CommentsDiscussions">
+            <End Role="Comments" EntitySet="CommentsSet" />
+            <End Role="Discussions" EntitySet="DiscussionsSet" />
+          </AssociationSet>
+          <AssociationSet Name="CommentsUsers" Association="ForumDbModel.CommentsUsers">
+            <End Role="Comments" EntitySet="CommentsSet" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <EntitySet Name="CategoriesSet" EntityType="ForumDbModel.Categories" />
+          <AssociationSet Name="CategoriesDiscussions" Association="ForumDbModel.CategoriesDiscussions">
+            <End Role="Categories" EntitySet="CategoriesSet" />
+            <End Role="Discussions" EntitySet="DiscussionsSet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Discussions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="Comments" Relationship="ForumDbModel.CommentsDiscussions" FromRole="Discussions" ToRole="Comments" />
+          <Property Name="Description" Type="String" Nullable="true" />
+          <Property Name="DateTime" Type="DateTime" Nullable="false" />
+          <Property Name="State" Type="String" Nullable="false" />
+          <NavigationProperty Name="Categories" Relationship="ForumDbModel.CategoriesDiscussions" FromRole="Discussions" ToRole="Categories" />
+        </EntityType>
+        <EntityType Name="Comments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Text" Type="String" Nullable="false" />
+          <NavigationProperty Name="Discussions" Relationship="ForumDbModel.CommentsDiscussions" FromRole="Comments" ToRole="Discussions" />
+          <NavigationProperty Name="Users" Relationship="ForumDbModel.CommentsUsers" FromRole="Comments" ToRole="Users" />
+          <Property Name="CreateDateTime" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <Association Name="CommentsDiscussions">
+          <End Type="ForumDbModel.Comments" Role="Comments" Multiplicity="*" />
+          <End Type="ForumDbModel.Discussions" Role="Discussions" Multiplicity="1" />
+        </Association>
+        <Association Name="CommentsUsers">
+          <End Type="ForumDbModel.Comments" Role="Comments" Multiplicity="*" />
+          <End Type="ForumDbModel.Users" Role="Users" Multiplicity="1" />
+        </Association>
+        <EntityType Name="Categories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="Discussions" Relationship="ForumDbModel.CategoriesDiscussions" FromRole="Categories" ToRole="Discussions" />
+        </EntityType>
+        <Association Name="CategoriesDiscussions">
+          <End Type="ForumDbModel.Categories" Role="Categories" Multiplicity="1" />
+          <End Type="ForumDbModel.Discussions" Role="Discussions" Multiplicity="0..1" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ForumDbModelStoreContainer" CdmEntityContainer="ForumDbEntities">
+    <EntitySetMapping Name="C__MigrationHistory">
+      <EntityTypeMapping TypeName="IsTypeOf(ForumDbModel.C__MigrationHistory)">
+        <MappingFragment StoreEntitySet="C__MigrationHistory">
+          <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+          <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+          <ScalarProperty Name="Model" ColumnName="Model" />
+          <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="IsTypeOf(ForumDbModel.Users)">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Age" ColumnName="Age" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DiscussionsSet">
+      <EntityTypeMapping TypeName="IsTypeOf(ForumDbModel.Discussions)">
+        <MappingFragment StoreEntitySet="DiscussionsSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+          <ScalarProperty Name="State" ColumnName="State" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CommentsSet">
+      <EntityTypeMapping TypeName="IsTypeOf(ForumDbModel.Comments)">
+        <MappingFragment StoreEntitySet="CommentsSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Text" ColumnName="Text" />
+          <ScalarProperty Name="CreateDateTime" ColumnName="CreateDateTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CategoriesSet">
+      <EntityTypeMapping TypeName="IsTypeOf(ForumDbModel.Categories)">
+        <MappingFragment StoreEntitySet="CategoriesSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="CommentsDiscussions" TypeName="ForumDbModel.CommentsDiscussions" StoreEntitySet="CommentsSet">
+      <EndProperty Name="Discussions">
+        <ScalarProperty Name="Id" ColumnName="Discussions_Id" />
+      </EndProperty>
+      <EndProperty Name="Comments">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="CommentsUsers" TypeName="ForumDbModel.CommentsUsers" StoreEntitySet="CommentsSet">
+      <EndProperty Name="Users">
+        <ScalarProperty Name="Id" ColumnName="Users_Id" />
+      </EndProperty>
+      <EndProperty Name="Comments">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="CategoriesDiscussions" TypeName="ForumDbModel.CategoriesDiscussions" StoreEntitySet="DiscussionsSet">
+      <EndProperty Name="Categories">
+        <ScalarProperty Name="Id" ColumnName="Categories_Id" />
+      </EndProperty>
+      <EndProperty Name="Discussions">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
