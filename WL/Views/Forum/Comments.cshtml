@@ -1,0 +1,11 @@
+﻿@model List<Comments>
+@{
+    ViewBag.Title = "Comments";
+}
+
+@foreach (var comment in Model)
+{
+    <p>@comment.Users.Email</p>
+    <p>@comment.Text</p>
+}
+

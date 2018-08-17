@@ -1,0 +1,26 @@
+﻿@using WL.Models;
+@model List<Discussions>
+
+<h2>@User.Identity.Name</h2>
+
+
+<div class="container">
+    <table class="table  table-striped table-hover">
+
+        <thead>
+            <tr>
+                <th><b>Обсуждение</b></th>
+                <th><b>Категория</b></th>
+            </tr>
+        </thead>
+        @foreach (var discussion in Model)
+        {
+            <tr>
+                <td onclick="alert('test')">@discussion.Name</td>
+                <td>@discussion.Categories.Name</td>
+            </tr>
+        }
+    </table>
+</div>
+
+
