@@ -12,25 +12,25 @@ namespace WL.Controllers
     public class ForumController : Controller
     {
 
-        DiscussionService discussion;
-        CommentsService commentsService;
+        DiscussionRepository discussion;
+      
 
         public ForumController()
         {
-            discussion = new DiscussionService();
-            commentsService = new CommentsService();            
+            discussion = new DiscussionRepository();
+                      
         }
         public ActionResult Index()
         {
-            var model = discussion.GetAll();
+            var model =  ForumViewModel.GetModel();
             return View(model);
         }
 
         [HttpGet]
         public ActionResult Comments(int id)
         {
-            var comments = commentsService.GetCommentsByDiscussionId(id);//todo 
-            return PartialView(comments);
+           // var comments = commentsService.GetCommentsByDiscussionId(id);//todo 
+            return PartialView();
         }
     }
 }

@@ -1,26 +1,42 @@
 ﻿@using WL.Models;
-@model List<Discussions>
+@model  ForumViewModel
 
 <h2>@User.Identity.Name</h2>
 
 
 <div class="container">
-    <table class="table  table-striped table-hover">
+    <div class="row">
+        <div class="col-md-8 text-center">
+            <div class="well">
+                <table class="table  table-striped table-hover">
 
-        <thead>
-            <tr>
-                <th><b>Обсуждение</b></th>
-                <th><b>Категория</b></th>
-            </tr>
-        </thead>
-        @foreach (var discussion in Model)
-        {
-            <tr>
-                <td onclick="alert('test')">@discussion.Name</td>
-                <td>@discussion.Categories.Name</td>
-            </tr>
-        }
-    </table>
+                    <thead>
+                        <tr>
+                            <th><b>Обсуждение</b></th>
+                        </tr>
+                    </thead>
+                    @foreach (var discussion in Model.Discussions)
+                    {
+                        <tr>
+                            <td onclick="alert('test')">@discussion.Name</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+        <div class="col-md-4 text-center">
+            <div class="well">
+                <table class="table table-bordered">
+                    @foreach (var category in Model.Categories)
+                    {
+                        <tr>
+                            <td>@category.Name</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 
 
