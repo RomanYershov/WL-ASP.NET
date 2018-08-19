@@ -1,11 +1,35 @@
-﻿@model List<Comments>
+﻿
 @{
     ViewBag.Title = "Comments";
 }
 
-@foreach (var comment in Model)
-{
-    <p>@comment.Users.Email</p>
-    <p>@comment.Text</p>
+@model List<Comments>
+@{
+    ViewBag.Title = "Comments";
 }
+
+<div class="well">
+    @if (Model.FirstOrDefault()?.Discussions.Name != null)
+    {
+        <h2>@Model.FirstOrDefault().Discussions.Name</h2>
+    }
+    else
+    {
+        <h4>В этом обсуждении пока отсутствуют комментарии ..</h4>
+    }
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        @foreach (var comment in Model)
+        {
+            <p>@comment.Text  <i>(@comment.Users.Email)</i></p>
+        }
+    </div>
+    <div class="col-md-4">
+        @{Html.RenderPartial("CategoriesPartialView",  ViewBag.CategoriesList as List<Categories>);}
+    </div>
+</div>
+
+
 

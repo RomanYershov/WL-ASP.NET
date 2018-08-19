@@ -17,17 +17,17 @@ namespace WL.Services
         }
         public void Commit()
         {
-            throw new NotImplementedException();
+            _context.SaveChanges();
         }
 
-        public void Create(T model)
+        public void Create(params T[] models)
         {
-            throw new NotImplementedException();
+            _dbSet.AddRange(models);
         }
 
-        public void Delete(int id)
+        public void Delete(T model)
         {
-            throw new NotImplementedException();
+            _dbSet.Remove(model);
         }
 
         public void Dispose()
@@ -40,9 +40,14 @@ namespace WL.Services
             return _dbSet.AsNoTracking().ToList();
         }
 
+        public List<T> Get(Func<T, bool> predicate)
+        {
+            return _dbSet.AsNoTracking().Where(predicate).ToList();
+        }
+
         public void Update(T model)
         {
-            throw new NotImplementedException();
+            _context.Entry(model).State = EntityState.Modified;
         }
     }
 }

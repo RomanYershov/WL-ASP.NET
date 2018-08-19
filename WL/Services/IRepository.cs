@@ -9,9 +9,10 @@ namespace WL.Services
     public interface IRepository<T> : IDisposable
     {
         List<T> Get();
-        void Create(T model);
+        List<T> Get(Func<T, bool> predicate);
+        void Create(params T[] models);
         void Update(T model);
-        void Delete(int id);
+        void Delete(T model);
         void Commit();
     }
 }
