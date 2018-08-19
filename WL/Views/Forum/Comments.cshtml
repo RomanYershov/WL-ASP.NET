@@ -21,13 +21,18 @@
 
 <div class="row">
     <div class="col-md-8">
+
         @foreach (var comment in Model)
         {
-            <p>@comment.Text  <i>(@comment.Users.Email)</i></p>
+            <div class="alert alert-success">
+                <span class="alert-info">@comment.Text</span>  <i class="label label-default">(@comment.Users.Email)</i>
+            </div>
         }
+
+
     </div>
     <div class="col-md-4">
-        @{Html.RenderPartial("CategoriesPartialView",  ViewBag.CategoriesList as List<Categories>);}
+        @{Html.RenderPartial("CategoriesPartialView", ViewBag.CategoriesList as List<Categories>);}
     </div>
 </div>
 
